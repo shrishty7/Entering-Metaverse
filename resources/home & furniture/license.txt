@@ -1,0 +1,11 @@
+Model Information:
+* title:	Abstract sphere
+* source:	https://sketchfab.com/3d-models/abstract-sphere-f690a68b485b487a881d12c57bb57cd4
+* author:	FlowArtDesign (https://sketchfab.com/FlowArtDesign)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Abstract sphere" (https://sketchfab.com/3d-models/abstract-sphere-f690a68b485b487a881d12c57bb57cd4) by FlowArtDesign (https://sketchfab.com/FlowArtDesign) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

@@ -1,0 +1,11 @@
+Model Information:
+* title:	Art Material Surface Test Cube
+* source:	https://sketchfab.com/3d-models/art-material-surface-test-cube-1f73536e6ff442998c66a99d82cda2ee
+* author:	3Dee (https://sketchfab.com/mellydeeis)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Art Material Surface Test Cube" (https://sketchfab.com/3d-models/art-material-surface-test-cube-1f73536e6ff442998c66a99d82cda2ee) by 3Dee (https://sketchfab.com/mellydeeis) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

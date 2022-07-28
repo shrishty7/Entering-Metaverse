@@ -1,0 +1,11 @@
+Model Information:
+* title:	Sphere - ID Test
+* source:	https://sketchfab.com/3d-models/sphere-id-test-9ce624715cd54e6abf55d6929f2c5fbf
+* author:	Berk Gedik (https://sketchfab.com/berkgedik)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Sphere - ID Test" (https://sketchfab.com/3d-models/sphere-id-test-9ce624715cd54e6abf55d6929f2c5fbf) by Berk Gedik (https://sketchfab.com/berkgedik) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
