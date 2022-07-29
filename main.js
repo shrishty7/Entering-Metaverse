@@ -2,9 +2,11 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.118/build/three.mod
 
 import {FBXLoader} from 'https://cdn.jsdelivr.net/npm/three@0.118.1/examples/jsm/loaders/FBXLoader.js';
 import {GLTFLoader} from 'https://cdn.jsdelivr.net/npm/three@0.118.1/examples/jsm/loaders/GLTFLoader.js';
+import {OrbitControls} from 'https://cdn.jsdelivr.net/npm/three@0.119.1/examples/jsm/controls/OrbitControls.js';
 // import {Text} from './node_modules/troika-three-text'
 
-
+// import connect from "./connect.js";
+var camera, scene;
 class BasicCharacterControllerProxy {
   constructor(animations) {
     this._animations = animations;
@@ -34,7 +36,7 @@ class BasicCharacterController {
   _Init(params) {
     this._params = params;
     this._decceleration = new THREE.Vector3(-0.0005, -0.0001, -5.0);
-    this._acceleration = new THREE.Vector3(1, 0.25, 500.0);
+    this._acceleration = new THREE.Vector3(10, 0.25, 500.0);
     this._velocity = new THREE.Vector3(0, 0, 0);
     this._position = new THREE.Vector3(1, 1, 1);
 
@@ -48,9 +50,9 @@ class BasicCharacterController {
 
   _LoadModels() {
     const loader = new FBXLoader(LoadingManager);
-    loader.setPath('./resources/zombie/');
-    loader.load('mremireh_o_desbiens.fbx', (fbx) => {
-      fbx.scale.setScalar(0.1);
+    loader.setPath('./resources/zombie/AJ/');
+    loader.load('AJ.fbx', (fbx) => {
+      fbx.scale.setScalar(0.17);
       fbx.traverse(c => {
         c.castShadow = true;
       });
@@ -75,11 +77,11 @@ class BasicCharacterController {
       };
 
       const loader = new FBXLoader(this._manager);
-      loader.setPath('./resources/zombie/');
-      loader.load('walk.fbx', (a) => { _OnLoad('walk', a); });
-      loader.load('run.fbx', (a) => { _OnLoad('run', a); });
-      loader.load('idle.fbx', (a) => { _OnLoad('idle', a); });
-      loader.load('dance.fbx', (a) => { _OnLoad('dance', a); });
+      loader.setPath('./resources/zombie/AJ/');
+      loader.load('WalkAJ.fbx', (a) => { _OnLoad('walk', a); });
+      loader.load('RunAJ.fbx', (a) => { _OnLoad('run', a); });
+      loader.load('IdleAJ.fbx', (a) => { _OnLoad('idle', a); });
+      loader.load('DanceAJ.fbx', (a) => { _OnLoad('dance', a); });
     });
   }
 
@@ -120,7 +122,7 @@ class BasicCharacterController {
 
     const acc = this._acceleration.clone();
     if (this._input._keys.shift) {
-      acc.multiplyScalar(3.0);
+      acc.multiplyScalar(2.0);
     }
 
     if (this._stateMachine._currentState.Name == 'dance') {
@@ -236,7 +238,6 @@ class BasicCharacterControllerInput {
   }
 };
 
-
 class FiniteStateMachine {
   constructor() {
     this._states = {};
@@ -270,7 +271,6 @@ class FiniteStateMachine {
   }
 };
 
-
 class CharacterFSM extends FiniteStateMachine {
   constructor(proxy) {
     super();
@@ -286,7 +286,6 @@ class CharacterFSM extends FiniteStateMachine {
   }
 };
 
-
 class State {
   constructor(parent) {
     this._parent = parent;
@@ -296,7 +295,6 @@ class State {
   Exit() {}
   Update() {}
 };
-
 
 class DanceState extends State {
   constructor(parent) {
@@ -348,7 +346,6 @@ class DanceState extends State {
   }
 };
 
-
 class WalkState extends State {
   constructor(parent) {
     super(parent);
@@ -396,7 +393,6 @@ class WalkState extends State {
   }
 };
 
-
 class RunState extends State {
   constructor(parent) {
     super(parent);
@@ -418,7 +414,7 @@ class RunState extends State {
         curAction.time = prevAction.time * ratio;
       } else {
         curAction.time = 0.0;
-        curAction.setEffectiveTimeScale(50);
+        curAction.setEffectiveTimeScale(1.0);
         curAction.setEffectiveWeight(1.0);
       }
 
@@ -443,7 +439,6 @@ class RunState extends State {
     this._parent.SetState('idle');
   }
 };
-
 
 class IdleState extends State {
   constructor(parent) {
@@ -481,7 +476,6 @@ class IdleState extends State {
   }
 };
 
-
 class ThirdPersonCamera {
   constructor(params) {
     this._params = params;
@@ -492,7 +486,7 @@ class ThirdPersonCamera {
   }
 
   _CalculateIdealOffset() {
-    const idealOffset = new THREE.Vector3(-1, 25, -40);
+    const idealOffset = new THREE.Vector3(-1, 30, -40);
     idealOffset.applyQuaternion(this._params.target.Rotation);
     idealOffset.add(this._params.target.Position);
     return idealOffset;
@@ -518,15 +512,14 @@ class ThirdPersonCamera {
 
     this._camera.position.copy(this._currentPosition);
     this._camera.lookAt(this._currentLookat);
+;
   }
 } 
 
- 
-
- 
 class ThirdPersonCameraDemo {
   constructor() {
     this._Initialize();
+    this._SellerSpace();
   }
 
   _Initialize() {
@@ -544,7 +537,7 @@ class ThirdPersonCameraDemo {
     window.addEventListener('resize', () => {
       this._OnWindowResize();
     }, false);
-
+    
     const fov = 60;
     const aspect = 1920 / 1080;
     const near = 1.0;
@@ -553,6 +546,8 @@ class ThirdPersonCameraDemo {
     this._camera.position.set(25, 10, 25);
 
     this._scene = new THREE.Scene();
+    camera = this._camera;
+    scene =  this._scene;
 
     let light = new THREE.DirectionalLight(0xFFFFFF, 1.0);
     light.position.set(-100, 100, 100);
@@ -577,7 +572,54 @@ class ThirdPersonCameraDemo {
     light = new THREE.PointLight(0xFFFFFF, 1);
     light.position.set(0,10,0);
     this._scene.add(light);
+    const targetList = [];
 
+    const geometry = new THREE.SphereGeometry( 33, 32, 16 );
+    const material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
+    const sphere = new THREE.Mesh( geometry, material );
+    sphere.position.set(140, 25, 270)
+    sphere.userData.name = 'sphere';
+    targetList.push(sphere);
+    sphere.userData.clickable= true;
+    this._scene.add( sphere );
+    document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+    
+    // var camera = this._camera.position;
+    const raycaster = new THREE.Raycaster(); // create once
+    const mouse = new THREE.Vector2(); // create once
+    console.log(camera);
+    
+    function onDocumentMouseDown( event ) 
+    {
+      console.log(camera);
+    
+      // update the mouse variable
+      mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+      mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+    
+      raycaster.setFromCamera( mouse, camera );
+    
+      var intersects = raycaster.intersectObjects( targetList );
+      
+      if ( intersects.length > 0 )
+      {		
+    
+        window.open('https://hub.link/B6L99L4');
+      }
+    
+    }
+    // connect.then((result) => {
+    //   console.log(result);
+    //   result.buildings.forEach((b, index) => {
+    //     if(index <= result.supply) {
+    //       const boxGeometry = new THREE.BoxGeometry(b.w, b.h, b.d);
+    //       const boxMaterial = new THREE.MeshPhongMaterial({color : 0x00ff00});
+    //       const box = new THREE.Mesh(boxGeometry, boxMaterial);
+    //       box.position.set(b.x, b.y, b.z);
+    //       this._scene.add(box);
+    //     }
+    //   });
+    // });
     const loader = new THREE.CubeTextureLoader();
     const texture = loader.load([
         './resources/clouds/bluecloud_ft.jpg',
@@ -590,8 +632,7 @@ class ThirdPersonCameraDemo {
     texture.encoding = THREE.sRGBEncoding;
     this._scene.background = texture;
 
-
-   
+  
   
     // const myText = new Text()
     // myScene.add(myText)
@@ -612,12 +653,10 @@ class ThirdPersonCameraDemo {
       gltf.scene.castShadow = true;
       gltf.scene.scale.setScalar(20);
       gltf.scene.position.set(0, 0, 0);
-      this._scene.add( gltf.scene );
+      // this._scene.add( gltf.scene );
     });
-    // const axesHelper = new THREE.AxesHelper( 500 );
-    // this._scene.add( axesHelper );
-
-
+    const axesHelper = new THREE.AxesHelper( 500 );
+    this._scene.add( axesHelper );
 
 //     //ADDING PORTALS ----------
 const loader1 = new GLTFLoader(LoadingManager);
@@ -626,6 +665,10 @@ loader1.load( './resources/fashion/scene.gltf', ( gltf ) => {
   gltf.scene.scale.setScalar(35);
   gltf.scene.position.set(140, 32, -300);
   this._scene.add( gltf.scene );
+  // gltf.scene.userData.name = 'Fashion';
+  // gltf.scene.userData.clickable = true;
+
+
 });
 
 const FashionLoader = new THREE.TextureLoader().load(
@@ -657,6 +700,10 @@ loader2.load( './resources/Mobile Phones/scene.gltf', ( gltf ) => {
   // gltf.scene.rotation.set( 0, 0.4, 0 )
   var Mobile=gltf.scene;
   this._scene.add( Mobile);
+  // Mobile.userData.name = 'Mobile';
+  // gltf.scene.userData.clickable = true;
+
+
 });
 
 const MobileLoader = new THREE.TextureLoader().load(
@@ -687,6 +734,10 @@ loader3.load( './resources/home & furniture/scene.gltf', ( gltf ) => {
   gltf.scene.scale.setScalar(2-40);
   gltf.scene.position.set(300, 25, 0);
   this._scene.add( gltf.scene );
+  // gltf.scene.userData.name = 'Home';
+  // gltf.scene.userData.clickable = true;
+
+
 });
 const HomeLoader = new THREE.TextureLoader().load(
   './resources/Texts/Home.png'
@@ -709,7 +760,14 @@ home.position.set(300, 70, 0)
 this._scene.add(home);
 
 
+// //ADDING CLICKABLE SPHERE
+// const geometry = new THREE.SphereGeometry( 30, 32, 16 );
+// const material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
+// const sphere = new THREE.Mesh( geometry, material );
+// sphere.position.set(140, 25, 270)
+// targetList.push(sphere);
 
+// this._scene.add( sphere );
 
 const loader4 = new GLTFLoader(LoadingManager);
 loader4.load( './resources/sports/scene.gltf', ( gltf ) => {
@@ -718,8 +776,11 @@ loader4.load( './resources/sports/scene.gltf', ( gltf ) => {
   gltf.scene.position.set(140, 25, 270);
   gltf.scene.rotateY(0.04);
   this._scene.add( gltf.scene );
-  
+  // loader4.userData.name = 'Sports';
+// loader4.userData.clickable = true;
+    
 });
+
 const sportsLoader = new THREE.TextureLoader().load(
   './resources/Texts/Sports.png'
 );
@@ -737,13 +798,15 @@ sports.rotation.y = 450;
 sports.position.set(140, 70, 270)
 this._scene.add(sports);
 
-
 const loader5 = new GLTFLoader(LoadingManager);
 loader5.load( './resources/tv & appliances/scene.gltf', ( gltf ) => {
   gltf.scene.castShadow = true;
   gltf.scene.scale.setScalar(2);
   gltf.scene.position.set(-170, 20, 270);
   this._scene.add( gltf.scene );
+  // gltf.scene.userData.name = 'TV';
+  // gltf.scene.userData.clickable = true;
+
 });
 const tvLoader = new THREE.TextureLoader().load(
   './resources/Texts/TV.png'
@@ -770,6 +833,10 @@ loader6.load( './resources/groceries/scene.gltf', ( gltf ) => {
   gltf.scene.scale.setScalar(0.4);
   gltf.scene.position.set(-160, 34, -250);
   this._scene.add( gltf.scene );
+  // gltf.scene.userData.name = 'Groceries';
+  // gltf.scene.userData.clickable = true;
+
+
 });
 const groceriesLoader = new THREE.TextureLoader().load(
   './resources/Texts/Groceries.png'
@@ -788,8 +855,13 @@ groceries.rotation.y = 44.8;
 groceries.position.set(-160, 75, -250)
 this._scene.add(groceries);
 //FINISHED ADDING PORTALS
+//ADDING CLICKABLE SPHERE
 
-   
+
+
+
+
+
 
 
 
@@ -800,7 +872,29 @@ this._scene.add(groceries);
     this._RAF();
   }
 
-  
+  _SellerSpace() {
+
+    const groundgeometry = new THREE.BoxGeometry( 1000, 0.1, 1000 );
+    const material = new THREE.MeshBasicMaterial( { color: 0x000000 } );
+    const cube = new THREE.Mesh( groundgeometry, material );
+    cube.position.set(0, 0, 1600);
+    this._scene.add( cube );
+
+    const roadgeometry = new THREE.BoxGeometry( 1200, 0.1, 30 );
+    // const material = new THREE.MeshBasicMaterial( { color: 0x000000 } );
+    const road = new THREE.Mesh( roadgeometry, material );
+    road.position.set(0, 0, 600);
+    road.rotation.y=-Math.PI/2;
+    this._scene.add( road );
+
+    // const boxGeometry = new THREE.BoxGeometry(200, 400, 200);
+    // const boxMaterial = new THREE.MeshPhongMaterial({color : 0x00ff00});
+    // const box = new THREE.Mesh(boxGeometry, boxMaterial);
+    // box.position.set(0, 0, 2000);
+    // this._scene.add(box);
+
+
+  }
   _LoadAnimatedModel() {
     const params = {
       camera: this._camera,
@@ -827,6 +921,7 @@ this._scene.add(groceries);
       }
 
       this._RAF();
+
 
       this._threejs.render(this._scene, this._camera);
       this._Step(t - this._previousRAF);
@@ -877,3 +972,5 @@ _TestLerp(0.01, 0.01);
 _TestLerp(1.0 / 100.0, 1.0 / 50.0);
 _TestLerp(1.0 - Math.pow(0.3, 1.0 / 100.0), 
           1.0 - Math.pow(0.3, 1.0 / 50.0));
+
+          
