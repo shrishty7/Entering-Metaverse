@@ -580,17 +580,90 @@ class ThirdPersonCameraDemo {
     const targetList = [];
 
     const geometry = new THREE.SphereGeometry( 33, 32, 16 );
-    const material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
-    material.transparent = true;
-    material.opacity = 0.0;
+    const material1 = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
+    const material2 = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
+    const material3 = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
+    const material4 = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
+    const material5 = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
+    const material6 = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
+
+    material1.transparent = true;
+    material1.opacity = 0.0;
+    material2.transparent = true;
+    material2.opacity = 0.0;
+    material3.transparent = true;
+    material3.opacity = 0.0;
+    material4.transparent = true;
+    material4.opacity = 0.0;
+    material5.transparent = true;
+    material5.opacity = 0.0;
+    material6.transparent = true;
+    material6.opacity = 0.0;
 
     
     document.addEventListener( 'mousedown', onDocumentMouseDown, false );
-    
+    document.addEventListener( 'pointermove', onPointerMove );
+
     // var camera = this._camera.position;
     const raycaster = new THREE.Raycaster(); // create once
     const mouse = new THREE.Vector2(); // create once
         
+    function onPointerMove( event ) 
+    {
+    
+      // update the mouse variable
+      mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+      mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+    
+      raycaster.setFromCamera( mouse, camera );
+    
+      var intersects = raycaster.intersectObjects( targetList );
+      
+      	if (intersects.length > 0){
+          if (intersects[0].object.name === 'Sports' ) {
+            document.body.style.cursor = 'pointer' 
+                      material4.opacity = 0.4;
+
+          }
+          else if (intersects[0].object.name === 'TV' && intersects.length > 0) {
+            document.body.style.cursor = 'pointer' 
+        material5.opacity = 0.4;
+          }
+          else if (intersects[0].object.name === 'Groceries' && intersects.length > 0) {
+            document.body.style.cursor = 'pointer' 
+        material6.opacity = 0.4;
+          }
+          else if (intersects[0].object.name === 'Mobiles' && intersects.length > 0) {
+            document.body.style.cursor = 'pointer' 
+        material2.opacity = 0.4;
+          }
+          else if (intersects[0].object.name === 'Fashion' && intersects.length > 0) {
+            document.body.style.cursor = 'pointer' 
+        material1.opacity = 0.4;
+          }
+          else if (intersects[0].object.name === 'Home' && intersects.length > 0) {
+            document.body.style.cursor = 'pointer' 
+        material3.opacity = 0.4;
+          }
+        }else { 
+          document.body.style.cursor = 'default' 
+          material4.opacity = 0.0;
+          material5.opacity = 0.0;
+          material6.opacity = 0.0;
+          material2.opacity = 0.0;
+          material1.opacity = 0.0;
+          material3.opacity = 0.0;
+
+        }
+       
+          
+      //     else { 
+      //   document.body.style.cursor = 'default' 
+      //   material4.opacity = 0.0;
+      // }
+      
+
+    }
     function onDocumentMouseDown( event ) 
     {
     
@@ -604,7 +677,7 @@ class ThirdPersonCameraDemo {
       
       if ( intersects.length > 0 )
       {		
-          if (intersects[0].object.name === 'Sports')
+          if (intersects[0].object.name === 'Sports') 
           window.open('https://hub.link/B6L99L4');
           else if (intersects[0].object.name === 'TV')
           window.open('https://hub.link/Gyz6JQa');
@@ -621,17 +694,18 @@ class ThirdPersonCameraDemo {
     
     }
     connect.then((result) => {
-      console.log(result);
+
       result.buildings.forEach((b, index) => {
         if(index <= result.supply) {
           const boxGeometry = new THREE.BoxGeometry(b.w, b.h, b.d);
-          const boxMaterial = new THREE.MeshPhongMaterial({color : (Math.random() *0x00ff00)});
+          const boxMaterial = new THREE.MeshBasicMaterial({color : (Math.random() *0x00ff00)});
           const box = new THREE.Mesh(boxGeometry, boxMaterial);
-          box.position.set(b.x, b.y, b.z);
+          box.position.set(b.x,b.h/2, b.z);
           this._scene.add(box);
         }
       });
     });
+    
     const loader = new THREE.CubeTextureLoader();
     const texture = loader.load([
         './resources/clouds/bluecloud_ft.jpg',
@@ -644,21 +718,9 @@ class ThirdPersonCameraDemo {
     texture.encoding = THREE.sRGBEncoding;
     this._scene.background = texture;
 
-  
-  
-    // const myText = new Text()
-    // myScene.add(myText)
-    
-    // // Set properties to configure:
-    // myText.text = 'Hello world!'
-    // myText.fontSize = 0.2
-    // myText.position.set ( 0, 10, 5);
-    // myText.color = 0x9966FF
-    
-    // // Update the rendering:
-    // myText.sync()
+
    
-    //ADDING GATE 
+    //ADDING PLATFORM 
     
     const platformGeometry = new THREE.CylinderGeometry( 300, 1, 30, 120 );
     const platformMaterial = new THREE.MeshPhysicalMaterial({
@@ -676,19 +738,19 @@ class ThirdPersonCameraDemo {
 
 
 
-
+  //DISPLAY X, Y, Z Axes
     const axesHelper = new THREE.AxesHelper( 500 );
     // this._scene.add( axesHelper );
 
 
     const BiggerSpheregeometry = new THREE.SphereGeometry( 42, 32, 16 );
-   
-    const sphere1 = new THREE.Mesh( BiggerSpheregeometry, material );
+
+    const sphere1 = new THREE.Mesh( BiggerSpheregeometry, material1 );
     sphere1.position.set(140, 25, -300)
     sphere1.name = 'Fashion';
     targetList.push(sphere1);
     this._scene.add( sphere1 );
-//     //ADDING PORTALS ----------
+     //ADDING PORTALS ----------
 const loader1 = new GLTFLoader(LoadingManager);
 loader1.load( './resources/fashion/scene.gltf', ( gltf ) => {
   gltf.scene.castShadow = true;
@@ -696,8 +758,7 @@ loader1.load( './resources/fashion/scene.gltf', ( gltf ) => {
   gltf.scene.position.set(140, 32, -300);
   model.push(gltf.scene);
   this._scene.add( gltf.scene );
-  // gltf.scene.userData.name = 'Fashion';
-  // gltf.scene.userData.clickable = true;
+
 
 
 });
@@ -721,7 +782,7 @@ this._scene.add(fashion);
 
 const Mobilespheregeometry = new THREE.BoxGeometry( 62, 62, 62 );
 
-const sphere2 = new THREE.Mesh( Mobilespheregeometry, material );
+const sphere2 = new THREE.Mesh( Mobilespheregeometry, material2 );
 sphere2.position.set(-290, 28, 40)
 sphere2.name = 'Mobiles';
 targetList.push(sphere2);
@@ -736,9 +797,6 @@ loader2.load( './resources/Mobile Phones/scene.gltf', ( gltf ) => {
   // gltf.scene.rotation.set( 0, 0.4, 0 )
   var Mobile=gltf.scene;
   this._scene.add( Mobile);
-  // Mobile.userData.name = 'Mobile';
-  // gltf.scene.userData.clickable = true;
-
 
 });
 
@@ -760,7 +818,7 @@ plane.position.set(-300, 70, 30)
 this._scene.add(plane);
 
 
-const sphere3 = new THREE.Mesh( geometry, material );
+const sphere3 = new THREE.Mesh( geometry, material3 );
 sphere3.position.set(300, 25, 0)
 sphere3.name = 'Home';
 targetList.push(sphere3);
@@ -774,9 +832,6 @@ loader3.load( './resources/home & furniture/scene.gltf', ( gltf ) => {
   gltf.scene.scale.setScalar(2-40);
   gltf.scene.position.set(300, 25, 0);
   this._scene.add( gltf.scene );
-  // gltf.scene.userData.name = 'Home';
-  // gltf.scene.userData.clickable = true;
-
 
 });
 const HomeLoader = new THREE.TextureLoader().load(
@@ -802,7 +857,7 @@ this._scene.add(home);
 
 // //ADDING CLICKABLE SPHERE
 
-const sphere4 = new THREE.Mesh( geometry, material );
+const sphere4 = new THREE.Mesh( geometry, material4 );
     sphere4.position.set(140, 25, 270)
     sphere4.name = 'Sports';
     targetList.push(sphere4);
@@ -841,7 +896,7 @@ sports.position.set(140, 70, 270)
 this._scene.add(sports);
 
 
-const sphere5 = new THREE.Mesh( geometry, material );
+const sphere5 = new THREE.Mesh( geometry, material5 );
 sphere5.position.set(-170, 20, 270)
 sphere5.name = 'TV';
 targetList.push(sphere5);
@@ -874,7 +929,8 @@ tv.rotation.y = 184.8;
 tv.position.set(-170, 70, 270)
 this._scene.add(tv);
 
-const sphere6 = new THREE.Mesh( BiggerSpheregeometry, material );
+
+const sphere6 = new THREE.Mesh( BiggerSpheregeometry, material6 );
 sphere6.position.set(-160, 34, -250)
 sphere6.name = 'Groceries';
 targetList.push(sphere6);
@@ -924,8 +980,7 @@ audioLoader1.load( './resources/bgmusic.mp3', function( buffer ) {
 	sound1.setLoop(true);
 	sound1.setVolume(0.5);
   sound1.setRefDistance(100);
-  sound1.resume();
-	sound1.play();
+sound1.play();
 });
 const ssphere = new THREE.CylinderGeometry( 15, 15, 2, 100 );
 const smaterial = new THREE.MeshPhongMaterial( { color: 0x000000 } );
