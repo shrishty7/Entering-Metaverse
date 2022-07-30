@@ -9,7 +9,7 @@ body {
   .hide {
     display : none;
   }
-  .start {
+  #startworld {
     background: rgba(255, 255, 255, .2);
     backdrop-filter: blur(5px);
     height: 80%;
@@ -25,6 +25,32 @@ body {
   
   }
 
+  .inst{
+    position: absolute;
+    width: 140px;
+    bottom : 10px;
+    /* background-color: red; */
+  }
+  
+  .content{
+/* 
+    background-color: #F8F005; */
+  }
+  .content p{
+    display: inline-block;
+    position:relative;
+    /* background-color: #F8F005; */
+     top:-8px;
+     left: 1px;
+     font-size: 1rem;
+     filter: drop-shadow(0 0 5px #FFFFFF);            font-family: 'Bebas Neue', cursive;
+
+  }
+ 
+  .btn{
+    height :25px;
+    width: 25px;
+  }
   .W {
     background: url('./resources/keys/letter-w.png');
     height: 20px;
@@ -163,7 +189,7 @@ body {
   
   }
   
-  .content {
+  .contentform {
   background-color: grey;
   
   

@@ -924,6 +924,7 @@ audioLoader1.load( './resources/bgmusic.mp3', function( buffer ) {
 	sound1.setLoop(true);
 	sound1.setVolume(0.5);
   sound1.setRefDistance(100);
+  sound1.resume();
 	sound1.play();
 });
 const ssphere = new THREE.CylinderGeometry( 15, 15, 2, 100 );
