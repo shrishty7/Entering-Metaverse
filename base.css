@@ -6,7 +6,9 @@ body {
     overscroll-behavior: none;
     overflow: hidden;
   }
-  
+  .hide {
+    display : none;
+  }
   .start {
     background: rgba(255, 255, 255, .2);
     backdrop-filter: blur(5px);
@@ -24,7 +26,7 @@ body {
   }
 
   .W {
-    background: url('your-image-url.jpg');
+    background: url('./resources/keys/letter-w.png');
     height: 20px;
     width: 20px;
     display: block;

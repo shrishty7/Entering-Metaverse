@@ -26,19 +26,19 @@
     </ul>
   </div>
 
-  <!-- <div class="start">
+  <div class="start" id="startworld">
     <h1 class="animated">WELCOME TO VIRTUAL SHOPPING EXPERIENCE! </h1>
     <br/><br/>
 
      <form name="myForm_1" method="post" >
-  <select  class="main_btn" name='urls'>
-  <option  class="content" value="Metaverse">METAVERSE</option>
-     <option class="content"value="https://hub.link/ZUU6FaU">Electronics</option>
-     <option class="content"value="https://hub.link/B6L99L4">Sports and Gym</option>
-     <option class="content"value="https://hub.link/Gyz6JQa">TV and Appliances</option>
-     <option class="content" value="https://hub.link/uMyBSbQ">Clothing</option>
-     <option class="content"value="https://hub.link/gzuQPPa">Home and Furniture</option>
-     <option class="content"value="https://hub.link/s4fXU9h">Grocery</option>
+        <select  class="main_btn" name='urls'>
+        <option  class="content" id="metaid" value="Metaverse">METAVERSE</option>
+          <option class="content"value="https://hub.link/ZUU6FaU">Electronics</option>
+          <option class="content"value="https://hub.link/B6L99L4">Sports and Gym</option>
+          <option class="content"value="https://hub.link/Gyz6JQa">TV and Appliances</option>
+          <option class="content" value="https://hub.link/uMyBSbQ">Clothing</option>
+          <option class="content"value="https://hub.link/gzuQPPa">Home and Furniture</option>
+          <option class="content"value="https://hub.link/s4fXU9h">Grocery</option>
        </select>
        </form>
 
@@ -46,18 +46,31 @@
    <br/><br/><br/><br/><br/><br/>
 
 
- <button class="enter" type="button" title="Download" onclick="openLink(document.forms['myForm_1'])">ENTER THE WORLD</button>
+ <button class="enter" id="enterworld" type="button" title="Download" onclick="openLink(document.forms['myForm_1'])">ENTER THE WORLD</button>
 
 
 
-</div> -->
-
+</div>
   <script type="text/javascript">
+    const button = document.getElementById("enterworld");
+    const target = document.getElementById("startworld");
+    const meta = document.getElementById("metaid");
+
  function openLink(myForm)
  {
-   var selectedIndex = myForm.elements["urls"].selectedIndex;
-   var url = myForm.elements["urls"].options[selectedIndex].value;
-   window.open(url);
+  
+
+    var selectedIndex = myForm.elements["urls"].selectedIndex;
+    var url = myForm.elements["urls"].options[selectedIndex].value;
+    if (url != "Metaverse") {
+      window.open(url);
+    }
+    else {
+      button.addEventListener("click", function() {
+      target.style.display = 'none';
+      console.log("function called");
+    })
+    }
  }
 </script>
 
