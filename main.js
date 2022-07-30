@@ -3,7 +3,7 @@ import {FBXLoader} from 'https://cdn.jsdelivr.net/npm/three@0.118.1/examples/jsm
 import {GLTFLoader} from 'https://cdn.jsdelivr.net/npm/three@0.118.1/examples/jsm/loaders/GLTFLoader.js';
 import {OrbitControls} from 'https://cdn.jsdelivr.net/npm/three@0.119.1/examples/jsm/controls/OrbitControls.js';
 
-// import connect from "./connect.js";
+import connect from "./connect.js";
 var camera;
 var model = [];
 class BasicCharacterControllerProxy {
@@ -520,7 +520,7 @@ class ThirdPersonCameraDemo {
     this._Initialize();
     this._SellerSpace();
   }
-
+  
   _Initialize() {
     this._threejs = new THREE.WebGLRenderer({
       antialias: true,
@@ -537,6 +537,8 @@ class ThirdPersonCameraDemo {
       this._OnWindowResize();
     }, false);
     
+
+
     const fov = 60;
     const aspect = 1920 / 1080;
     const near = 1.0;
@@ -570,6 +572,11 @@ class ThirdPersonCameraDemo {
     light = new THREE.PointLight(0xFFFFFF, 1);
     light.position.set(0,10,0);
     this._scene.add(light);
+
+    light = new THREE.PointLight(0xFFFFFF, 1);
+    light.position.set(0,200,2200);
+    this._scene.add(light);
+
     const targetList = [];
 
     const geometry = new THREE.SphereGeometry( 33, 32, 16 );
@@ -613,18 +620,18 @@ class ThirdPersonCameraDemo {
 
     
     }
-    // connect.then((result) => {
-    //   console.log(result);
-    //   result.buildings.forEach((b, index) => {
-    //     if(index <= result.supply) {
-    //       const boxGeometry = new THREE.BoxGeometry(b.w, b.h, b.d);
-    //       const boxMaterial = new THREE.MeshPhongMaterial({color : 0x00ff00});
-    //       const box = new THREE.Mesh(boxGeometry, boxMaterial);
-    //       box.position.set(b.x, b.y, b.z);
-    //       this._scene.add(box);
-    //     }
-    //   });
-    // });
+    connect.then((result) => {
+      console.log(result);
+      result.buildings.forEach((b, index) => {
+        if(index <= result.supply) {
+          const boxGeometry = new THREE.BoxGeometry(b.w, b.h, b.d);
+          const boxMaterial = new THREE.MeshPhongMaterial({color : 0x00ff00});
+          const box = new THREE.Mesh(boxGeometry, boxMaterial);
+          box.position.set(b.x, b.y, b.z);
+          this._scene.add(box);
+        }
+      });
+    });
     const loader = new THREE.CubeTextureLoader();
     const texture = loader.load([
         './resources/clouds/bluecloud_ft.jpg',
@@ -903,9 +910,47 @@ this._scene.add(groceries);
 //FINISHED ADDING PORTALS
 //ADDING CLICKABLE SPHERE
 
+// create an AudioListener and add it to the camera
+const listener = new THREE.AudioListener();
+this._camera.add( listener );
 
+// create a global audio source
+const sound1 = new THREE.PositionalAudio( listener );
 
+// load a sound and set it as the Audio object's buffer
+const audioLoader1 = new THREE.AudioLoader();
+audioLoader1.load( './resources/bgmusic.mp3', function( buffer ) {
+	sound1.setBuffer( buffer );
+	sound1.setLoop(true);
+	sound1.setVolume(0.5);
+  sound1.setRefDistance(100);
+	sound1.play();
+});
+const ssphere = new THREE.CylinderGeometry( 15, 15, 2, 100 );
+const smaterial = new THREE.MeshPhongMaterial( { color: 0x000000 } );
+const speaker1 = new THREE.Mesh( ssphere, smaterial );
+this._scene.add( speaker1 );
+speaker1.position.set(0, -1, 0);
+// finally add the sound to the mesh
+speaker1.add( sound1 );
 
+const sound2 = new THREE.PositionalAudio( listener );
+
+// load a sound and set it as the Audio object's buffer
+const audioLoader2 = new THREE.AudioLoader();
+audioLoader2.load( './resources/bgmusic2.mp3', function( buffer ) {
+	sound2.setBuffer( buffer );
+	sound2.setLoop(true);
+	sound2.setVolume(0.5);
+  sound2.setRefDistance(80);
+	sound2.play();
+});
+// const speaker2geo = new THREE.CylinderGeometry( 15, 15, 2, 100 );
+// const smaterial = new THREE.MeshPhongMaterial( { color: 0x000000 } );
+const speaker2 = new THREE.Mesh( ssphere, smaterial );
+this._scene.add( speaker2 );
+speaker2.position.set(0, -1, 1600);
+speaker2.add( sound2 );
 
 
 
@@ -918,10 +963,11 @@ this._scene.add(groceries);
     this._RAF();
   }
 
+  
   _SellerSpace() {
 
     const groundgeometry = new THREE.BoxGeometry( 1000, 0.1, 1000 );
-    const groundmaterial = new THREE.MeshBasicMaterial( { color: 0x000000 } );
+    const groundmaterial = new THREE.MeshPhongMaterial( { color: 0x000000 } );
     const cube = new THREE.Mesh( groundgeometry, groundmaterial );
     cube.position.set(0, 0, 1600);
     this._scene.add( cube );

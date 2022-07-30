@@ -22,6 +22,13 @@ body {
     align-items: space-between;
   
   }
+
+  .W {
+    background: url('your-image-url.jpg');
+    height: 20px;
+    width: 20px;
+    display: block;
+  }
   h1 {
     text-emphasis-color: white;
   
