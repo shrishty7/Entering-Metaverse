@@ -40,10 +40,11 @@ body {
     display: inline-block;
     position:relative;
     /* background-color: #F8F005; */
-     top:-8px;
-     left: 1px;
-     font-size: 1rem;
-     filter: drop-shadow(0 0 5px #FFFFFF);            font-family: 'Bebas Neue', cursive;
+    top:-8px;
+    left: 1px;
+    font-size: 1rem;
+    text-shadow: 1px 1px white;
+    font-family: 'Bebas Neue', cursive;
 
   }
  

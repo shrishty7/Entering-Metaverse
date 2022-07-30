@@ -754,8 +754,8 @@ class ThirdPersonCameraDemo {
 const loader1 = new GLTFLoader(LoadingManager);
 loader1.load( './resources/fashion/scene.gltf', ( gltf ) => {
   gltf.scene.castShadow = true;
-  gltf.scene.scale.setScalar(35);
-  gltf.scene.position.set(140, 32, -300);
+  gltf.scene.scale.setScalar(37);
+  gltf.scene.position.set(140, 28.5, -300);
   model.push(gltf.scene);
   this._scene.add( gltf.scene );
 
@@ -829,7 +829,7 @@ this._scene.add( sphere3 );
 const loader3 = new GLTFLoader(LoadingManager);
 loader3.load( './resources/home & furniture/scene.gltf', ( gltf ) => {
   gltf.scene.castShadow = true;
-  gltf.scene.scale.setScalar(2-40);
+  gltf.scene.scale.setScalar(45);
   gltf.scene.position.set(300, 25, 0);
   this._scene.add( gltf.scene );
 
