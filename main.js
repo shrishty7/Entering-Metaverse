@@ -1,12 +1,11 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.118/build/three.module.js';
-
 import {FBXLoader} from 'https://cdn.jsdelivr.net/npm/three@0.118.1/examples/jsm/loaders/FBXLoader.js';
 import {GLTFLoader} from 'https://cdn.jsdelivr.net/npm/three@0.118.1/examples/jsm/loaders/GLTFLoader.js';
 import {OrbitControls} from 'https://cdn.jsdelivr.net/npm/three@0.119.1/examples/jsm/controls/OrbitControls.js';
-// import {Text} from './node_modules/troika-three-text'
 
 // import connect from "./connect.js";
-var camera, scene;
+var camera;
+var model = [];
 class BasicCharacterControllerProxy {
   constructor(animations) {
     this._animations = animations;
@@ -547,7 +546,6 @@ class ThirdPersonCameraDemo {
 
     this._scene = new THREE.Scene();
     camera = this._camera;
-    scene =  this._scene;
 
     let light = new THREE.DirectionalLight(0xFFFFFF, 1.0);
     light.position.set(-100, 100, 100);
@@ -576,22 +574,18 @@ class ThirdPersonCameraDemo {
 
     const geometry = new THREE.SphereGeometry( 33, 32, 16 );
     const material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
-    const sphere = new THREE.Mesh( geometry, material );
-    sphere.position.set(140, 25, 270)
-    sphere.userData.name = 'sphere';
-    targetList.push(sphere);
-    sphere.userData.clickable= true;
-    this._scene.add( sphere );
+    material.transparent = true;
+    material.opacity = 0.0;
+
+    
     document.addEventListener( 'mousedown', onDocumentMouseDown, false );
     
     // var camera = this._camera.position;
     const raycaster = new THREE.Raycaster(); // create once
     const mouse = new THREE.Vector2(); // create once
-    console.log(camera);
-    
+        
     function onDocumentMouseDown( event ) 
     {
-      console.log(camera);
     
       // update the mouse variable
       mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
@@ -603,9 +597,20 @@ class ThirdPersonCameraDemo {
       
       if ( intersects.length > 0 )
       {		
-    
-        window.open('https://hub.link/B6L99L4');
-      }
+          if (intersects[0].object.name === 'Sports')
+          window.open('https://hub.link/B6L99L4');
+          else if (intersects[0].object.name === 'TV')
+          window.open('https://hub.link/Gyz6JQa');
+          else if (intersects[0].object.name === 'Groceries')
+          window.open('https://hub.link/s4fXU9h');
+          else if (intersects[0].object.name === 'Mobiles')
+          window.open('https://hub.link/ZUU6FaU');
+          else if (intersects[0].object.name === 'Fashion')
+          window.open('https://hub.link/uMyBSbQ');
+          else if (intersects[0].object.name === 'Home')
+          window.open('https://hub.link/gzuQPPa');
+      } 
+
     
     }
     // connect.then((result) => {
@@ -647,23 +652,42 @@ class ThirdPersonCameraDemo {
     // myText.sync()
    
     //ADDING GATE 
-    const dome = new GLTFLoader(LoadingManager);
-
-    dome.load( './resources/dome/scene.gltf', ( gltf ) => {
-      gltf.scene.castShadow = true;
-      gltf.scene.scale.setScalar(20);
-      gltf.scene.position.set(0, 0, 0);
-      // this._scene.add( gltf.scene );
+    
+    const platformGeometry = new THREE.CylinderGeometry( 300, 1, 30, 120 );
+    const platformMaterial = new THREE.MeshPhysicalMaterial({
+  roughness: 0,
+  metalness: 0,
+  color: 0x000000
     });
-    const axesHelper = new THREE.AxesHelper( 500 );
-    this._scene.add( axesHelper );
+    platformMaterial.transparent = true;
+    platformMaterial.opacity = 0.2;
+    platformMaterial.thickness = 0.8
 
+    const platform = new THREE.Mesh(platformGeometry, platformMaterial)
+    platform.position.set(0, -15, 0);
+    // this._scene.add(platform);
+
+
+
+
+    const axesHelper = new THREE.AxesHelper( 500 );
+    // this._scene.add( axesHelper );
+
+
+    const BiggerSpheregeometry = new THREE.SphereGeometry( 42, 32, 16 );
+   
+    const sphere1 = new THREE.Mesh( BiggerSpheregeometry, material );
+    sphere1.position.set(140, 25, -300)
+    sphere1.name = 'Fashion';
+    targetList.push(sphere1);
+    this._scene.add( sphere1 );
 //     //ADDING PORTALS ----------
 const loader1 = new GLTFLoader(LoadingManager);
 loader1.load( './resources/fashion/scene.gltf', ( gltf ) => {
   gltf.scene.castShadow = true;
   gltf.scene.scale.setScalar(35);
   gltf.scene.position.set(140, 32, -300);
+  model.push(gltf.scene);
   this._scene.add( gltf.scene );
   // gltf.scene.userData.name = 'Fashion';
   // gltf.scene.userData.clickable = true;
@@ -688,8 +712,13 @@ fashion.rotation.y= -88.28;
 fashion.position.set(140, 70, -300)
 this._scene.add(fashion);
 
+const Mobilespheregeometry = new THREE.BoxGeometry( 62, 62, 62 );
 
-
+const sphere2 = new THREE.Mesh( Mobilespheregeometry, material );
+sphere2.position.set(-290, 28, 40)
+sphere2.name = 'Mobiles';
+targetList.push(sphere2);
+this._scene.add( sphere2 );
 
 
 const loader2 = new GLTFLoader(LoadingManager);
@@ -724,7 +753,11 @@ plane.position.set(-300, 70, 30)
 this._scene.add(plane);
 
 
-
+const sphere3 = new THREE.Mesh( geometry, material );
+sphere3.position.set(300, 25, 0)
+sphere3.name = 'Home';
+targetList.push(sphere3);
+this._scene.add( sphere3 );
 
 
 
@@ -761,15 +794,16 @@ this._scene.add(home);
 
 
 // //ADDING CLICKABLE SPHERE
-// const geometry = new THREE.SphereGeometry( 30, 32, 16 );
-// const material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
-// const sphere = new THREE.Mesh( geometry, material );
-// sphere.position.set(140, 25, 270)
-// targetList.push(sphere);
 
-// this._scene.add( sphere );
+const sphere4 = new THREE.Mesh( geometry, material );
+    sphere4.position.set(140, 25, 270)
+    sphere4.name = 'Sports';
+    targetList.push(sphere4);
+    this._scene.add( sphere4 );
 
 const loader4 = new GLTFLoader(LoadingManager);
+
+//Adding Sphere gltf
 loader4.load( './resources/sports/scene.gltf', ( gltf ) => {
   gltf.scene.castShadow = true;
   gltf.scene.scale.setScalar(30);
@@ -781,6 +815,7 @@ loader4.load( './resources/sports/scene.gltf', ( gltf ) => {
     
 });
 
+//dding Sports Billboard
 const sportsLoader = new THREE.TextureLoader().load(
   './resources/Texts/Sports.png'
 );
@@ -797,6 +832,13 @@ sports.rotation.y = 450;
 // sports.rotation.y = Math.PI;
 sports.position.set(140, 70, 270)
 this._scene.add(sports);
+
+
+const sphere5 = new THREE.Mesh( geometry, material );
+sphere5.position.set(-170, 20, 270)
+sphere5.name = 'TV';
+targetList.push(sphere5);
+this._scene.add( sphere5 );
 
 const loader5 = new GLTFLoader(LoadingManager);
 loader5.load( './resources/tv & appliances/scene.gltf', ( gltf ) => {
@@ -825,7 +867,11 @@ tv.rotation.y = 184.8;
 tv.position.set(-170, 70, 270)
 this._scene.add(tv);
 
-
+const sphere6 = new THREE.Mesh( BiggerSpheregeometry, material );
+sphere6.position.set(-160, 34, -250)
+sphere6.name = 'Groceries';
+targetList.push(sphere6);
+this._scene.add( sphere6 );
 
 const loader6 = new GLTFLoader(LoadingManager);
 loader6.load( './resources/groceries/scene.gltf', ( gltf ) => {
@@ -875,14 +921,14 @@ this._scene.add(groceries);
   _SellerSpace() {
 
     const groundgeometry = new THREE.BoxGeometry( 1000, 0.1, 1000 );
-    const material = new THREE.MeshBasicMaterial( { color: 0x000000 } );
-    const cube = new THREE.Mesh( groundgeometry, material );
+    const groundmaterial = new THREE.MeshBasicMaterial( { color: 0x000000 } );
+    const cube = new THREE.Mesh( groundgeometry, groundmaterial );
     cube.position.set(0, 0, 1600);
     this._scene.add( cube );
 
     const roadgeometry = new THREE.BoxGeometry( 1200, 0.1, 30 );
     // const material = new THREE.MeshBasicMaterial( { color: 0x000000 } );
-    const road = new THREE.Mesh( roadgeometry, material );
+    const road = new THREE.Mesh( roadgeometry, groundmaterial );
     road.position.set(0, 0, 600);
     road.rotation.y=-Math.PI/2;
     this._scene.add( road );
@@ -922,7 +968,7 @@ this._scene.add(groceries);
 
       this._RAF();
 
-
+      // if (model) console.log(model[0]);
       this._threejs.render(this._scene, this._camera);
       this._Step(t - this._previousRAF);
       this._previousRAF = t;
@@ -942,7 +988,6 @@ this._scene.add(groceries);
     this._thirdPersonCamera.Update(timeElapsedS);
   }
 }
-
 
 let _APP = null;
 
