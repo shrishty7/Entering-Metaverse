@@ -966,9 +966,9 @@ class ThirdPersonCameraDemo {
 //FINISHED ADDING PORTALS
 //ADDING MOZILLA HUB
 const spokeloader = new GLTFLoader(LoadingManager);
-spokeloader.load( './flipkart demo2.glb', ( gltf ) => {
+spokeloader.load( './flipkart (Sports&Gym).glb', ( gltf ) => {
   gltf.scene.castShadow = true;
-  gltf.scene.scale.setScalar(10);
+  gltf.scene.scale.setScalar(20);
   gltf.scene.position.set(0, 0, 0);
   // gltf.scene.rotation.set( 0, 0.4, 0 )
   // var Mobile=gltf.scene;
