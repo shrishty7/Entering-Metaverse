@@ -734,7 +734,7 @@ class ThirdPersonCameraDemo {
 
     const platform = new THREE.Mesh(platformGeometry, platformMaterial)
     platform.position.set(0, -15, 0);
-    // this._scene.add(platform);
+    this._scene.add(platform);
 
 
 
@@ -1045,7 +1045,7 @@ speaker2.add( sound2 );
     const road = new THREE.Mesh( roadgeometry, groundmaterial );
     road.position.set(0, 0, 600);
     road.rotation.y=-Math.PI/2;
-    this._scene.add( road );
+    // this._scene.add( road );
 
     // const boxGeometry = new THREE.BoxGeometry(200, 400, 200);
     // const boxMaterial = new THREE.MeshPhongMaterial({color : 0x00ff00});
