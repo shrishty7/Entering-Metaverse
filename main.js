@@ -743,227 +743,239 @@ class ThirdPersonCameraDemo {
     // this._scene.add( axesHelper );
 
 
-    const BiggerSpheregeometry = new THREE.SphereGeometry( 42, 32, 16 );
+//     const BiggerSpheregeometry = new THREE.SphereGeometry( 42, 32, 16 );
 
-    const sphere1 = new THREE.Mesh( BiggerSpheregeometry, material1 );
-    sphere1.position.set(140, 25, -300)
-    sphere1.name = 'Fashion';
-    targetList.push(sphere1);
-    this._scene.add( sphere1 );
-     //ADDING PORTALS ----------
-const loader1 = new GLTFLoader(LoadingManager);
-loader1.load( './resources/fashion/scene.gltf', ( gltf ) => {
-  gltf.scene.castShadow = true;
-  gltf.scene.scale.setScalar(37);
-  gltf.scene.position.set(140, 28.5, -300);
-  model.push(gltf.scene);
-  this._scene.add( gltf.scene );
-
-
-
-});
-
-const FashionLoader = new THREE.TextureLoader().load(
-  './resources/Texts/Fashion.png'
-);
-const fashion = new THREE.Mesh(
-
-new THREE.PlaneGeometry(305, 105, 1, 1),
-new THREE.MeshStandardMaterial({
-  map: FashionLoader
-}));
-fashion.castShadow = false;
-fashion.receiveShadow = true;
-fashion.rotation.y = Math.PI / 2;
-
-fashion.rotation.y= -88.28;
-fashion.position.set(140, 70, -300)
-this._scene.add(fashion);
-
-const Mobilespheregeometry = new THREE.BoxGeometry( 62, 62, 62 );
-
-const sphere2 = new THREE.Mesh( Mobilespheregeometry, material2 );
-sphere2.position.set(-290, 28, 40)
-sphere2.name = 'Mobiles';
-targetList.push(sphere2);
-this._scene.add( sphere2 );
-
-
-const loader2 = new GLTFLoader(LoadingManager);
-loader2.load( './resources/Mobile Phones/scene.gltf', ( gltf ) => {
-  gltf.scene.castShadow = true;
-  gltf.scene.scale.setScalar(28);
-  gltf.scene.position.set(-290, 28, 40);
-  // gltf.scene.rotation.set( 0, 0.4, 0 )
-  var Mobile=gltf.scene;
-  this._scene.add( Mobile);
-
-});
-
-const MobileLoader = new THREE.TextureLoader().load(
-  './resources/Texts/Mobile.png'
-);
-const plane = new THREE.Mesh(
-
-new THREE.PlaneGeometry(305, 105, 1, 1),
-new THREE.MeshStandardMaterial({
-  map: MobileLoader
-}));
-plane.castShadow = false;
-plane.receiveShadow = true;
-plane.rotation.y = Math.PI / 2;
-
-// plane.rotation.z = -Math.PI / 2;
-plane.position.set(-300, 70, 30)
-this._scene.add(plane);
-
-
-const sphere3 = new THREE.Mesh( geometry, material3 );
-sphere3.position.set(300, 25, 0)
-sphere3.name = 'Home';
-targetList.push(sphere3);
-this._scene.add( sphere3 );
+//     const sphere1 = new THREE.Mesh( BiggerSpheregeometry, material1 );
+//     sphere1.position.set(140, 25, -300)
+//     sphere1.name = 'Fashion';
+//     targetList.push(sphere1);
+//     this._scene.add( sphere1 );
+//      //ADDING PORTALS ----------
+// const loader1 = new GLTFLoader(LoadingManager);
+// loader1.load( './resources/fashion/scene.gltf', ( gltf ) => {
+//   gltf.scene.castShadow = true;
+//   gltf.scene.scale.setScalar(37);
+//   gltf.scene.position.set(140, 28.5, -300);
+//   model.push(gltf.scene);
+//   this._scene.add( gltf.scene );
 
 
 
-const loader3 = new GLTFLoader(LoadingManager);
-loader3.load( './resources/home & furniture/scene.gltf', ( gltf ) => {
-  gltf.scene.castShadow = true;
-  gltf.scene.scale.setScalar(45);
-  gltf.scene.position.set(300, 25, 0);
-  this._scene.add( gltf.scene );
+// });
 
-});
-const HomeLoader = new THREE.TextureLoader().load(
-  './resources/Texts/Home.png'
-);
-const home = new THREE.Mesh(
+// const FashionLoader = new THREE.TextureLoader().load(
+//   './resources/Texts/Fashion.png'
+// );
+// const fashion = new THREE.Mesh(
 
-new THREE.PlaneGeometry(305, 105, 1, 1),
-new THREE.MeshStandardMaterial({
-  map: HomeLoader
-}));
-home.castShadow = false;
-home.receiveShadow = true;
-home.rotation.y = Math.PI / 2;
+// new THREE.PlaneGeometry(305, 105, 1, 1),
+// new THREE.MeshStandardMaterial({
+//   map: FashionLoader
+// }));
+// fashion.castShadow = false;
+// fashion.receiveShadow = true;
+// fashion.rotation.y = Math.PI / 2;
 
-// home.rotation.x = Math.PI ;
-// home.rotation.y = Math.PI ;
-home.rotation.y = 3*Math.PI/2 ;
+// fashion.rotation.y= -88.28;
+// fashion.position.set(140, 70, -300)
+// this._scene.add(fashion);
 
-home.position.set(300, 70, 0)
-this._scene.add(home);
+// const Mobilespheregeometry = new THREE.BoxGeometry( 62, 62, 62 );
+
+// const sphere2 = new THREE.Mesh( Mobilespheregeometry, material2 );
+// sphere2.position.set(-290, 28, 40)
+// sphere2.name = 'Mobiles';
+// targetList.push(sphere2);
+// this._scene.add( sphere2 );
 
 
-// //ADDING CLICKABLE SPHERE
+// const loader2 = new GLTFLoader(LoadingManager);
+// loader2.load( './resources/Mobile Phones/scene.gltf', ( gltf ) => {
+//   gltf.scene.castShadow = true;
+//   gltf.scene.scale.setScalar(28);
+//   gltf.scene.position.set(-290, 28, 40);
+//   // gltf.scene.rotation.set( 0, 0.4, 0 )
+//   var Mobile=gltf.scene;
+//   this._scene.add( Mobile);
 
-const sphere4 = new THREE.Mesh( geometry, material4 );
-    sphere4.position.set(140, 25, 270)
-    sphere4.name = 'Sports';
-    targetList.push(sphere4);
-    this._scene.add( sphere4 );
+// });
 
-const loader4 = new GLTFLoader(LoadingManager);
+// const MobileLoader = new THREE.TextureLoader().load(
+//   './resources/Texts/Mobile.png'
+// );
+// const plane = new THREE.Mesh(
 
-//Adding Sphere gltf
-loader4.load( './resources/sports/scene.gltf', ( gltf ) => {
-  gltf.scene.castShadow = true;
-  gltf.scene.scale.setScalar(30);
-  gltf.scene.position.set(140, 25, 270);
-  gltf.scene.rotateY(0.04);
-  this._scene.add( gltf.scene );
-  // loader4.userData.name = 'Sports';
-// loader4.userData.clickable = true;
+// new THREE.PlaneGeometry(305, 105, 1, 1),
+// new THREE.MeshStandardMaterial({
+//   map: MobileLoader
+// }));
+// plane.castShadow = false;
+// plane.receiveShadow = true;
+// plane.rotation.y = Math.PI / 2;
+
+// // plane.rotation.z = -Math.PI / 2;
+// plane.position.set(-300, 70, 30)
+// this._scene.add(plane);
+
+
+// const sphere3 = new THREE.Mesh( geometry, material3 );
+// sphere3.position.set(300, 25, 0)
+// sphere3.name = 'Home';
+// targetList.push(sphere3);
+// this._scene.add( sphere3 );
+
+
+
+// const loader3 = new GLTFLoader(LoadingManager);
+// loader3.load( './resources/home & furniture/scene.gltf', ( gltf ) => {
+//   gltf.scene.castShadow = true;
+//   gltf.scene.scale.setScalar(45);
+//   gltf.scene.position.set(300, 25, 0);
+//   this._scene.add( gltf.scene );
+
+// });
+// const HomeLoader = new THREE.TextureLoader().load(
+//   './resources/Texts/Home.png'
+// );
+// const home = new THREE.Mesh(
+
+// new THREE.PlaneGeometry(305, 105, 1, 1),
+// new THREE.MeshStandardMaterial({
+//   map: HomeLoader
+// }));
+// home.castShadow = false;
+// home.receiveShadow = true;
+// home.rotation.y = Math.PI / 2;
+
+// // home.rotation.x = Math.PI ;
+// // home.rotation.y = Math.PI ;
+// home.rotation.y = 3*Math.PI/2 ;
+
+// home.position.set(300, 70, 0)
+// this._scene.add(home);
+
+
+// // //ADDING CLICKABLE SPHERE
+
+// const sphere4 = new THREE.Mesh( geometry, material4 );
+//     sphere4.position.set(140, 25, 270)
+//     sphere4.name = 'Sports';
+//     targetList.push(sphere4);
+//     this._scene.add( sphere4 );
+
+// const loader4 = new GLTFLoader(LoadingManager);
+
+// //Adding Sphere gltf
+// loader4.load( './resources/sports/scene.gltf', ( gltf ) => {
+//   gltf.scene.castShadow = true;
+//   gltf.scene.scale.setScalar(30);
+//   gltf.scene.position.set(140, 25, 270);
+//   gltf.scene.rotateY(0.04);
+//   this._scene.add( gltf.scene );
+//   // loader4.userData.name = 'Sports';
+// // loader4.userData.clickable = true;
     
-});
+// });
 
-//dding Sports Billboard
-const sportsLoader = new THREE.TextureLoader().load(
-  './resources/Texts/Sports.png'
-);
-const sports = new THREE.Mesh(
+// //dding Sports Billboard
+// const sportsLoader = new THREE.TextureLoader().load(
+//   './resources/Texts/Sports.png'
+// );
+// const sports = new THREE.Mesh(
 
-new THREE.PlaneGeometry(305, 105, 1, 1),
-new THREE.MeshStandardMaterial({
-  map: sportsLoader
-}));
-sports.castShadow = false;
-sports.receiveShadow = true;
-sports.rotation.y = 450;
+// new THREE.PlaneGeometry(305, 105, 1, 1),
+// new THREE.MeshStandardMaterial({
+//   map: sportsLoader
+// }));
+// sports.castShadow = false;
+// sports.receiveShadow = true;
+// sports.rotation.y = 450;
 
-// sports.rotation.y = Math.PI;
-sports.position.set(140, 70, 270)
-this._scene.add(sports);
-
-
-const sphere5 = new THREE.Mesh( geometry, material5 );
-sphere5.position.set(-170, 20, 270)
-sphere5.name = 'TV';
-targetList.push(sphere5);
-this._scene.add( sphere5 );
-
-const loader5 = new GLTFLoader(LoadingManager);
-loader5.load( './resources/tv & appliances/scene.gltf', ( gltf ) => {
-  gltf.scene.castShadow = true;
-  gltf.scene.scale.setScalar(2);
-  gltf.scene.position.set(-170, 20, 270);
-  this._scene.add( gltf.scene );
-  // gltf.scene.userData.name = 'TV';
-  // gltf.scene.userData.clickable = true;
-
-});
-const tvLoader = new THREE.TextureLoader().load(
-  './resources/Texts/TV.png'
-);
-const tv = new THREE.Mesh(
-
-new THREE.PlaneGeometry(305, 105, 1, 1),
-new THREE.MeshStandardMaterial({
-  map: tvLoader
-}));
-tv.castShadow = false;
-tv.receiveShadow = true;
-tv.rotation.y = Math.PI / 2;
-
-tv.rotation.y = 184.8;
-tv.position.set(-170, 70, 270)
-this._scene.add(tv);
+// // sports.rotation.y = Math.PI;
+// sports.position.set(140, 70, 270)
+// this._scene.add(sports);
 
 
-const sphere6 = new THREE.Mesh( BiggerSpheregeometry, material6 );
-sphere6.position.set(-160, 34, -250)
-sphere6.name = 'Groceries';
-targetList.push(sphere6);
-this._scene.add( sphere6 );
+// const sphere5 = new THREE.Mesh( geometry, material5 );
+// sphere5.position.set(-170, 20, 270)
+// sphere5.name = 'TV';
+// targetList.push(sphere5);
+// this._scene.add( sphere5 );
 
-const loader6 = new GLTFLoader(LoadingManager);
-loader6.load( './resources/groceries/scene.gltf', ( gltf ) => {
-  gltf.scene.castShadow = true;
-  gltf.scene.scale.setScalar(0.4);
-  gltf.scene.position.set(-160, 34, -250);
-  this._scene.add( gltf.scene );
-  // gltf.scene.userData.name = 'Groceries';
-  // gltf.scene.userData.clickable = true;
+// const loader5 = new GLTFLoader(LoadingManager);
+// loader5.load( './resources/tv & appliances/scene.gltf', ( gltf ) => {
+//   gltf.scene.castShadow = true;
+//   gltf.scene.scale.setScalar(2);
+//   gltf.scene.position.set(-170, 20, 270);
+//   this._scene.add( gltf.scene );
+//   // gltf.scene.userData.name = 'TV';
+//   // gltf.scene.userData.clickable = true;
+
+// });
+// const tvLoader = new THREE.TextureLoader().load(
+//   './resources/Texts/TV.png'
+// );
+// const tv = new THREE.Mesh(
+
+// new THREE.PlaneGeometry(305, 105, 1, 1),
+// new THREE.MeshStandardMaterial({
+//   map: tvLoader
+// }));
+// tv.castShadow = false;
+// tv.receiveShadow = true;
+// tv.rotation.y = Math.PI / 2;
+
+// tv.rotation.y = 184.8;
+// tv.position.set(-170, 70, 270)
+// this._scene.add(tv);
 
 
-});
-const groceriesLoader = new THREE.TextureLoader().load(
-  './resources/Texts/Groceries.png'
-);
-const groceries = new THREE.Mesh(
+// const sphere6 = new THREE.Mesh( BiggerSpheregeometry, material6 );
+// sphere6.position.set(-160, 34, -250)
+// sphere6.name = 'Groceries';
+// targetList.push(sphere6);
+// this._scene.add( sphere6 );
 
-new THREE.PlaneGeometry(305, 95, 1, 1),
-new THREE.MeshStandardMaterial({
-  map: groceriesLoader
-}));
-groceries.castShadow = false;
-groceries.receiveShadow = true;
-groceries.rotation.y = Math.PI / 2;
+// const loader6 = new GLTFLoader(LoadingManager);
+// loader6.load( './resources/groceries/scene.gltf', ( gltf ) => {
+//   gltf.scene.castShadow = true;
+//   gltf.scene.scale.setScalar(0.4);
+//   gltf.scene.position.set(-160, 34, -250);
+//   this._scene.add( gltf.scene );
+//   // gltf.scene.userData.name = 'Groceries';
+//   // gltf.scene.userData.clickable = true;
 
-groceries.rotation.y = 44.8;
-groceries.position.set(-160, 75, -250)
-this._scene.add(groceries);
+
+// });
+// const groceriesLoader = new THREE.TextureLoader().load(
+//   './resources/Texts/Groceries.png'
+// );
+// const groceries = new THREE.Mesh(
+
+// new THREE.PlaneGeometry(305, 95, 1, 1),
+// new THREE.MeshStandardMaterial({
+//   map: groceriesLoader
+// }));
+// groceries.castShadow = false;
+// groceries.receiveShadow = true;
+// groceries.rotation.y = Math.PI / 2;
+
+// groceries.rotation.y = 44.8;
+// groceries.position.set(-160, 75, -250)
+// this._scene.add(groceries);
 //FINISHED ADDING PORTALS
+//ADDING MOZILLA HUB
+const spokeloader = new GLTFLoader(LoadingManager);
+spokeloader.load( './flipkart (Sports&Gym).glb', ( gltf ) => {
+  gltf.scene.castShadow = true;
+  gltf.scene.scale.setScalar(20);
+  gltf.scene.position.set(0, 0, 0);
+  // gltf.scene.rotation.set( 0, 0.4, 0 )
+  // var Mobile=gltf.scene;
+  this._scene.add( gltf.scene);
+
+});
+
 //ADDING CLICKABLE SPHERE
 
 // create an AudioListener and add it to the camera
